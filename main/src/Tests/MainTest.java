@@ -2,11 +2,9 @@ package Tests;
 
 import org.junit.jupiter.api.Test;
 
-import static org.junit.jupiter.api.Assertions.*;
-
-class MainTest {
+public class MainTest {
 
     @Test
-    void main() {
+    public static void main() {
     }
 }

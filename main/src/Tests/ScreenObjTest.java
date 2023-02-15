@@ -1,7 +1,5 @@
 package Tests;
 
-import static org.junit.jupiter.api.Assertions.*;
-
 class ScreenObjTest {
 
     @org.junit.jupiter.api.Test

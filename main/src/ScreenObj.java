@@ -4,8 +4,6 @@ import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 
 
-
-
 // Path: main\src\ScreenObj.java
 
 
@@ -98,7 +96,7 @@ public class ScreenObj {
 
 
         // Add a key listener to the JFrame using the KeyListener function in this class
-       handleInput();
+        handleInput();
 
 
     }
@@ -208,14 +206,14 @@ public class ScreenObj {
      * Add keyboard inputs on JFrame
      */
     public void addKeyListener(KeyListener keyListener) {
-            this.frame.addKeyListener(keyListener);
+        this.frame.addKeyListener(keyListener);
     }
 
     /**
      * Remove keyboard inputs on JFrame
      */
     public void removeKeyListener(KeyListener keyListener) {
-            this.frame.removeKeyListener(keyListener);
+        this.frame.removeKeyListener(keyListener);
     }
 
     /**
@@ -225,15 +223,15 @@ public class ScreenObj {
         this.frame.addKeyListener(new KeyListener() {
 
             /*
-                * This function is called when a key is typed.
-                * This function is not used in this program.
-            */
+             * This function is called when a key is typed.
+             * This function is not used in this program.
+             */
             @Override
             public void keyTyped(KeyEvent e) {
             }
 
             /*
-                * This function is called when a key is pressed.
+             * This function is called when a key is pressed.
              */
             @Override
             public void keyPressed(KeyEvent e) {
@@ -253,7 +251,7 @@ public class ScreenObj {
             }
 
             /*
-                * This function is called when a key is released.
+             * This function is called when a key is released.
              */
             @Override
             public void keyReleased(KeyEvent e) {
