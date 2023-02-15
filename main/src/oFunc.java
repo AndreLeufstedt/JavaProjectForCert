@@ -1,0 +1,37 @@
+import jdk.jfr.Description;
+import org.jetbrains.annotations.NotNull;
+
+import java.time.LocalTime;
+import java.time.format.DateTimeFormatter;
+
+public class oFunc {
+    /** Includes three static methods that is used to make a better looking print for the console,
+     * This includes: printInfo, printError and the GetTime that is used to get the formatted time. **/
+
+
+    // Info print statement that includes time
+    public static void printInfo(String message) {
+        System.out.println(GetTime() + " - INFO: " + message);
+    }
+
+
+    public static void printError(String message) {
+             System.out.println(GetTime() + " - ERROR: " + message );
+    }
+
+
+    // Warning print statement that includes time
+    public static void printWarning(String message) { System.out.println(GetTime() + " - WARNING: " + message); }
+
+    // Normal print statement
+    public static void printNormal(String message) { System.out.println(message); }
+
+    @Description("Returns the current time in the Format Hours:Minutes:Seconds")
+    public static @NotNull String GetTime() {
+        return LocalTime.now().format(DateTimeFormatter.ofPattern("h:m:s"));
+    }
+
+
+
+}
+
