@@ -1,5 +1,5 @@
 import jdk.jfr.Description;
-import org.jetbrains.annotations.NotNull;
+
 
 import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
@@ -26,8 +26,12 @@ public class oFunc {
     // Normal print statement
     public static void printNormal(String message) { System.out.println(message); }
 
+
+    // Print space in console
+    public static void printSpace() { System.out.println(); }
+
     @Description("Returns the current time in the Format Hours:Minutes:Seconds")
-    public static @NotNull String GetTime() {
+    public static String GetTime() {
         return LocalTime.now().format(DateTimeFormatter.ofPattern("h:m:s"));
     }
 

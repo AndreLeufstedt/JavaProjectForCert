@@ -1,8 +1,6 @@
 import jdk.jfr.Description;
-import org.jetbrains.annotations.NotNull;
 
-
-import java.sql.Savepoint;
+import java.awt.*;
 import java.util.Objects;
 import java.util.Scanner;
 
@@ -11,15 +9,31 @@ import java.util.Scanner;
 public class Main {
     public static void main(String[] args) {
         /* Entrance Point of the Program */
+        // Run all tests
 
+
+        // Constant Variables to for documentation
         final String VERSION      = "1.0.0";
         final String AUTHOR       = "André Leufstedt";
         final String PROGRAM_NAME = "String Input";
         final String PROGRAM_DESC = "Program that takes in multiple strings and saves them into an array and prints them out when the user types in SAVED or QUIT to exit the program.";
 
+        oFunc.printInfo("Program Name: " + PROGRAM_NAME);
+        oFunc.printInfo("Program Description: " + PROGRAM_DESC);
+        oFunc.printInfo("Program Version: " + VERSION);
+        oFunc.printInfo("Program Author: " + AUTHOR);
+
+
+        oFunc.printSpace();
+        oFunc.printSpace();
 
         // Constructs the current Class as an object to use the functions included
         Main main = new Main();
+
+        // New ScreenObj object
+        ScreenObj screenObj = new ScreenObj("String Input", 100, 100, 500, 500, Color.GREEN, 1.0f, true, false, false, true);
+
+
 
         oFunc.printInfo("Parsing Arguments");
 
@@ -45,12 +59,85 @@ public class Main {
         // Loop to get multiple strings, KEYWORD: "QUIT" is used to exit the program or the array has reached the maximum input of 10
         while(!Objects.equals(input, "QUIT")) {
 
+            /* Loop to check if the array is full */
+            if (currentIndex >= savedInput.length) {
+                oFunc.printError("Array is full");
+                System.exit(1);
+            }
 
+            // Gets the input from the user
             input = main.getUserInput("Enter a String: ");
             oFunc.printInfo("You entered: " + input);
 
+            // If the input is TITLE: then set the title of the window to the input after the messa
+            if (Objects.equals(input, "TITLE: ")) {
+                screenObj.setTitle(input.substring(7));
+            }
 
-            if(Objects.equals(input, "SAVED")) {
+            // If the input is SIZE: then set the size of the window to the input after the message
+            if (Objects.equals(input, "SIZE: ")) {
+                String[] size = input.substring(6).split("x");
+                screenObj.setSize(Integer.parseInt(size[0]), Integer.parseInt(size[1]));
+            }
+
+            // If the input is ADDBUTTON add a new button at the specified location
+            if(input.startsWith("ADDBUTTON: ")) {
+                String[] button = input.substring(11).split(",");
+                oFunc.printInfo("Button: " + button[0] + " X: " + button[1] + " Y: " + button[2] + " Width: " + button[3] + " Height: " + button[4]);
+                screenObj.addButton(button[0], Integer.parseInt(button[1]), Integer.parseInt(button[2]), Integer.parseInt(button[3]), Integer.parseInt(button[4]));
+            }
+
+            // If the input is ADDTEXTFIELD add a new textfield at the specified location
+            if(input.startsWith("ADDTEXTFIELD: ")) {
+                String[] textField = input.substring(14).split(",");
+                oFunc.printInfo("TextField: " + textField[0] + " X: " + textField[1] + " Y: " + textField[2] + " Width: " + textField[3] + " Height: " + textField[4]);
+                screenObj.addTextField(textField[0], Integer.parseInt(textField[1]), Integer.parseInt(textField[2]), Integer.parseInt(textField[3]), Integer.parseInt(textField[4]));
+            }
+
+
+            // Switch statement for single commands.
+            switch(input) {
+
+
+                case "VISIBILITY: TRUE"    -> screenObj.setVisible(true);
+                case "VISIBILITY: FALSE"   -> screenObj.setVisible(false);
+                case "COLOR: RED"          -> screenObj.setBackground(Color.RED);
+                case "COLOR: BLUE"         -> screenObj.setBackground(Color.BLUE);
+                case "COLOR: GREEN"        -> screenObj.setBackground(Color.GREEN);
+                case "COLOR: YELLOW"       -> screenObj.setBackground(Color.YELLOW);
+                case "COLOR: BLACK"        -> screenObj.setBackground(Color.BLACK);
+                case "COLOR: WHITE"        -> screenObj.setBackground(Color.WHITE);
+                case "COLOR: GRAY"         -> screenObj.setBackground(Color.GRAY);
+                case "COLOR: PINK"         -> screenObj.setBackground(Color.PINK);
+                case "COLOR: ORANGE"       -> screenObj.setBackground(Color.ORANGE);
+                case "COLOR: CYAN"         -> screenObj.setBackground(Color.CYAN);
+                case "COLOR: MAGENTA"      -> screenObj.setBackground(Color.MAGENTA);
+                case "COLOR: LIGHT_GRAY"   -> screenObj.setBackground(Color.LIGHT_GRAY);
+                case "COLOR: DARK_GRAY"    -> screenObj.setBackground(Color.DARK_GRAY);
+                case "COLOR: RANDOM"       -> screenObj.setBackground(new Color((int) (Math.random() * 0x1000000)));
+
+
+
+
+                case "SAVED" -> {
+                    oFunc.printInfo("Printing Saved Input: ");
+                    for (String s : savedInput) {
+                        if (s != null && s.length() > 0) {
+                            oFunc.printNormal(s);
+                        }
+                    }
+                }
+
+                default -> {
+                    savedInput[currentIndex] = input;
+                    currentIndex++;
+                }
+            }
+
+
+
+            // If the input is QUIT then exit the program
+            if (Objects.equals(input, "SAVED")) {
                 oFunc.printInfo("Printing Saved Input: ");
                 for (String s : savedInput) {
                     if (s != null && s.length() > 0) {
@@ -61,28 +148,26 @@ public class Main {
             }
 
 
-            // Saves the input into the array at the current index and increments the index
-            savedInput[currentIndex++] = input;
 
 
         }
 
+        // Prints out the saved input
         oFunc.printInfo("Printing Saved Input: ");
         for (String s : savedInput) {
             if (s != null && s.length() > 0) {
                 oFunc.printNormal(s);
             }
         }
+
+        // Prints out the exit message
         oFunc.printWarning("Exiting Program");
-
-
-
-
+        System.exit(0);
     }
 
 
     @Description("Prints out the Arguments passed in during runtime")
-    private void parseArgs(String @NotNull [] args) {
+    private void parseArgs(String [] args) {
         int nArg = 0;
         // For loop for the arguments
         for (String arg: args) {
@@ -102,6 +187,10 @@ public class Main {
         oFunc.printInfo(inputMessage);
         return scan.nextLine();
     }
+
+
+
+
 
 
 }
